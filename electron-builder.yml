@@ -9,7 +9,6 @@ files:
 
 linux:
   target: deb
-  icon: packages/renderer/src/assets/logos/logoFishOnly.png
 
 publish:
   - provider: github
