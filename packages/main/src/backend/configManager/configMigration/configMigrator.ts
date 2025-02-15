@@ -1,13 +1,16 @@
 import { z } from 'zod';
 import { type Config } from '../../commonTypes';
 import { isOriginalConfig } from './versions/original';
-import { migrateOriginalToV1, v1ConfigSchema } from './versions/v1';
+import { migrateOriginalToV1 } from './versions/v1';
+import { migrateV1ToV2, v2ConfigSchema } from './versions/v2';
 
-const latestConfigSchema = v1ConfigSchema;
+const latestConfigSchema = v2ConfigSchema;
 
 // migrations[n] should be a function that converts version n to version n+1
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const migrations: Record<number, (config: any) => any> = {};
+const migrations: Record<number, (config: any) => any> = {
+  1: migrateV1ToV2,
+};
 
 export function migrateConfig(config: unknown): Config {
   let currentConfig = config;
